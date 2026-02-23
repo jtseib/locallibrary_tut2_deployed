@@ -1,0 +1,35 @@
+{% extends "catalog/base.html" %}
+{% block content %}
+    <a href="http://127.0.0.1:8000/book_list/">Go Back</a>
+  <h1>Title: {{ book.title }}</h1>
+        <div>
+{% if book.book_image %}
+    <img alt="Book image" class="card-img-top embed-responsive-item"
+         src="{{ book.book_image.url }}" style="max-width: 200px;
+height: auto;"/>
+{% endif %}
+    </div>
+
+  <p><strong>Author:</strong> <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Summary:</strong> {{ book.summary }}</p>
+  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+  <p><strong>Genre:</strong> {{ book.genre.all|join:", " }}</p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Copies</h4>
+
+    {% for copy in book.bookinstance_set.all %}
+      <hr>
+      <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+        {{ copy.get_status_display }}
+      </p>
+      {% if copy.status != 'a' %}
+        <p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
+      {% endif %}
+      <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
+      <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+        {% empty %}
+        <p>No Copies Available.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

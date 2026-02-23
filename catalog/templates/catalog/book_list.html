@@ -1,0 +1,36 @@
+{% extends "catalog/base.html" %}
+{% block content %}
+    <h1>Book List</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+    {% if book_list %}
+        <table class="table table-bordered">
+            {% for book in book_list %}
+                <tr class="table-secondary">
+                    <td><a href="{{ book.get_absolute_url }}">{{ book.title }} {{ book.author }}</a></td>
+
+                    {% if user.is_superuser %}
+                        {% if book.bookinstance_set.all %}
+                            <td>Copies Exist - Cannot delete book</td>
+                        {% else %}
+                            <td><a href="{% url 'book_delete' pk=book.pk %}"
+                                   onclick="return confirm('Are you sure you want to delete?')"
+                                   class="btn btn-danger">Delete</a>
+                            </td>
+                        {% endif %}
+                        <td><a href="{% url 'book_update' pk=book.pk %}" class="btn btn-primary">Edit Book</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>There are no books in the library.</p>
+    {% endif %}
+{% endblock %}
