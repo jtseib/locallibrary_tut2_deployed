@@ -33,4 +33,7 @@
     {% else %}
         <p>There are no authors in the library.</p>
     {% endif %}
+    {% if user.is_superuser %}
+        <a href="{% url 'author_create' %}" class="btn btn-primary">Add Author</a>
+    {% endif %}
 {% endblock %}

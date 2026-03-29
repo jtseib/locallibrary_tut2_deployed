@@ -33,4 +33,7 @@
     {% else %}
         <p>There are no books in the library.</p>
     {% endif %}
+    {% if user.is_superuser %}
+        <a class="btn btn-primary" href="{% url 'book_create' %}">Add Book</a>
+    {% endif %}
 {% endblock %}

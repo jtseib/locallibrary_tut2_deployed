@@ -1,6 +1,5 @@
 {% extends "catalog/base.html" %}
 {% block content %}
-    <a href="http://127.0.0.1:8000/book_list/">Go Back</a>
   <h1>Title: {{ book.title }}</h1>
         <div>
 {% if book.book_image %}
@@ -31,5 +30,22 @@ height: auto;"/>
         {% empty %}
         <p>No Copies Available.</p>
     {% endfor %}
+  {% if user.is_superuser %}
+    <td><a href="{% url 'book_create_copy' pk=book.pk %}"
+           class="btn btn-primary">Add Book Copy</a></td>
+    <td><a href="{% url 'book_update' pk=book.pk %}" class="btn btn-primary">Edit Book</a></td>
+  {% endif %}
+  {% if user.is_superuser %}
+      {% if book.bookinstance_set.all %}
+          <td>Copies Exist - Cannot delete book</td>
+      {% else %}
+          <td><a href="{% url 'book_delete' pk=book.pk %}"
+                 onclick="return confirm('Are you sure you want to delete?')"
+                 class="btn btn-danger">Delete</a>
+          </td>
+      {% endif %}
+
+  {% endif %}
+  <a href="{% url 'book_list' %}">Back to All Books</a>
   </div>
 {% endblock %}

@@ -4,11 +4,9 @@
 
 {% block content %}
     {% if perms.catalog.create_book or perms.catalog.edit_book %}
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST"  enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
-            * An image for the book will be uploaded automatically if one is not provided and one exists at GoogleBooks.com.
-            <br><br>
 
             <input type="submit" value="Submit"/>
         </form>

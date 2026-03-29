@@ -42,7 +42,7 @@ class Book(models.Model):
     # Foreign Key used because book can only have one author, but authors can have multiple books
     author = models.ForeignKey('Author', on_delete=models.RESTRICT, null=True)
 
-    summary = models.TextField(max_length=1000, help_text='Enter a brief description of the book')
+    summary = models.TextField(max_length=3000, help_text='Enter a brief description of the book')
     isbn = models.CharField('ISBN', max_length=13, unique=True,
                             help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
 

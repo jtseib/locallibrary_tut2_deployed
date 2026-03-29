@@ -7,6 +7,8 @@
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
+            * A stock image for the book will be used if an image is not provided.
+            <br><br>
 
             <input type="submit" value="Submit"/>
         </form>
